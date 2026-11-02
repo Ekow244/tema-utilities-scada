@@ -1,0 +1,603 @@
+{
+  "custom": {
+    "commandStatus": "Ready"
+  },
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "width": 1200,
+      "height": 1100
+    }
+  },
+  "root": {
+    "type": "ia.container.flex",
+    "version": 0,
+    "meta": {
+      "name": "root"
+    },
+    "position": {
+      "basis": "45px",
+      "shrink": 0
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "padding": "24px",
+        "gap": "10px",
+        "backgroundColor": "#f3f5f2",
+        "overflow": "auto"
+      }
+    },
+    "custom": {},
+    "children": [
+      {
+        "type": "ia.display.label",
+        "version": 0,
+        "meta": {
+          "name": "Title"
+        },
+        "position": {
+          "basis": "45px",
+          "shrink": 0
+        },
+        "props": {
+          "text": "TEMA UTILITIES LAB \u00b7 IGNITION",
+          "style": {
+            "fontSize": 28,
+            "color": "#173b3a"
+          }
+        },
+        "custom": {}
+      },
+      {
+        "type": "ia.display.label",
+        "version": 0,
+        "meta": {
+          "name": "Scope"
+        },
+        "position": {
+          "basis": "45px",
+          "shrink": 0
+        },
+        "props": {
+          "text": "Local training project \u00b7 actual Modbus I/O \u00b7 independent portfolio simulation",
+          "style": {
+            "fontSize": 13,
+            "color": "#173b3a"
+          }
+        },
+        "custom": {}
+      },
+      {
+        "type": "ia.display.label",
+        "version": 0,
+        "meta": {
+          "name": "State"
+        },
+        "position": {
+          "basis": "45px",
+          "shrink": 0
+        },
+        "props": {
+          "text": "",
+          "style": {
+            "fontSize": 22,
+            "color": "#173b3a"
+          }
+        },
+        "custom": {},
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "\"Batch state: \" + {[default]TemaTraining/StateName}"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "ia.display.label",
+        "version": 0,
+        "meta": {
+          "name": "Temperature"
+        },
+        "position": {
+          "basis": "45px",
+          "shrink": 0
+        },
+        "props": {
+          "text": "",
+          "style": {
+            "fontSize": 22,
+            "color": "#173b3a"
+          }
+        },
+        "custom": {},
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "\"Temperature: \" + toStr({[default]TemaTraining/Temperature}) + \" degC\""
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "ia.display.label",
+        "version": 0,
+        "meta": {
+          "name": "Quality"
+        },
+        "position": {
+          "basis": "45px",
+          "shrink": 0
+        },
+        "props": {
+          "text": "",
+          "style": {
+            "fontSize": 13,
+            "color": "#173b3a"
+          }
+        },
+        "custom": {},
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "if({[default]TemaTraining/SensorFault}, \"SIMULATED SENSOR FAILURE \u00b7 reject temperature for control\", \"Sensor flag healthy; check tag quality overlays for communication faults\")"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "ia.display.label",
+        "version": 0,
+        "meta": {
+          "name": "Volume"
+        },
+        "position": {
+          "basis": "45px",
+          "shrink": 0
+        },
+        "props": {
+          "text": "",
+          "style": {
+            "fontSize": 20,
+            "color": "#173b3a"
+          }
+        },
+        "custom": {},
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "\"Vessel: \" + toStr({[default]TemaTraining/Volume}) + \" / 120 L\""
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "ia.display.label",
+        "version": 0,
+        "meta": {
+          "name": "Heater"
+        },
+        "position": {
+          "basis": "45px",
+          "shrink": 0
+        },
+        "props": {
+          "text": "",
+          "style": {
+            "fontSize": 20,
+            "color": "#173b3a"
+          }
+        },
+        "custom": {},
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "\"Heater demand: \" + toStr({[default]TemaTraining/HeaterPercent}) + \" percent\""
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "ia.container.flex",
+        "version": 0,
+        "meta": {
+          "name": "Controls"
+        },
+        "position": {
+          "basis": "100px",
+          "shrink": 0
+        },
+        "props": {
+          "direction": "row",
+          "wrap": "wrap",
+          "style": {
+            "gap": "10px"
+          }
+        },
+        "custom": {},
+        "children": [
+          {
+            "type": "ia.input.button",
+            "version": 0,
+            "meta": {
+              "name": "Prepare"
+            },
+            "position": {
+              "basis": "150px",
+              "shrink": 0
+            },
+            "props": {
+              "text": "Prepare standard"
+            },
+            "custom": {},
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "isGood({[default]TemaTraining/StateCode}) && ({[default]TemaTraining/StateCode}=0 || {[default]TemaTraining/StateCode}=9 || {[default]TemaTraining/StateCode}=12 || {[default]TemaTraining/StateCode}=13)"
+                  }
+                }
+              }
+            },
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "type": "script",
+                  "scope": "G",
+                  "config": {
+                    "script": "\ttry:\n\t\tresult = tema.prepare_standard()\n\t\tself.view.custom.commandStatus = \"Accepted: Prepare standard\"\n\texcept Exception as exc:\n\t\tself.view.custom.commandStatus = \"Rejected: \" + str(exc)\n"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.input.button",
+            "version": 0,
+            "meta": {
+              "name": "Start"
+            },
+            "position": {
+              "basis": "150px",
+              "shrink": 0
+            },
+            "props": {
+              "text": "Start batch"
+            },
+            "custom": {},
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "isGood({[default]TemaTraining/StateCode}) && {[default]TemaTraining/StateCode}=0"
+                  }
+                }
+              }
+            },
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "type": "script",
+                  "scope": "G",
+                  "config": {
+                    "script": "\ttry:\n\t\tresult = tema.command(\"start\")\n\t\tself.view.custom.commandStatus = \"Accepted: Start batch\"\n\texcept Exception as exc:\n\t\tself.view.custom.commandStatus = \"Rejected: \" + str(exc)\n"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.input.button",
+            "version": 0,
+            "meta": {
+              "name": "Pause"
+            },
+            "position": {
+              "basis": "150px",
+              "shrink": 0
+            },
+            "props": {
+              "text": "Pause"
+            },
+            "custom": {},
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "isGood({[default]TemaTraining/StateCode}) && {[default]TemaTraining/StateCode}>=1 && {[default]TemaTraining/StateCode}<=8"
+                  }
+                }
+              }
+            },
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "type": "script",
+                  "scope": "G",
+                  "config": {
+                    "script": "\ttry:\n\t\tresult = tema.command(\"pause\")\n\t\tself.view.custom.commandStatus = \"Accepted: Pause\"\n\texcept Exception as exc:\n\t\tself.view.custom.commandStatus = \"Rejected: \" + str(exc)\n"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.input.button",
+            "version": 0,
+            "meta": {
+              "name": "Resume"
+            },
+            "position": {
+              "basis": "150px",
+              "shrink": 0
+            },
+            "props": {
+              "text": "Resume"
+            },
+            "custom": {},
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "isGood({[default]TemaTraining/StateCode}) && {[default]TemaTraining/StateCode}=10"
+                  }
+                }
+              }
+            },
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "type": "script",
+                  "scope": "G",
+                  "config": {
+                    "script": "\ttry:\n\t\tresult = tema.command(\"resume\")\n\t\tself.view.custom.commandStatus = \"Accepted: Resume\"\n\texcept Exception as exc:\n\t\tself.view.custom.commandStatus = \"Rejected: \" + str(exc)\n"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.input.button",
+            "version": 0,
+            "meta": {
+              "name": "Abort"
+            },
+            "position": {
+              "basis": "150px",
+              "shrink": 0
+            },
+            "props": {
+              "text": "Abort"
+            },
+            "custom": {},
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "isGood({[default]TemaTraining/StateCode}) && (({[default]TemaTraining/StateCode}>=1 && {[default]TemaTraining/StateCode}<=8) || {[default]TemaTraining/StateCode}=10)"
+                  }
+                }
+              }
+            },
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "type": "script",
+                  "scope": "G",
+                  "config": {
+                    "script": "\ttry:\n\t\tresult = tema.command(\"abort\")\n\t\tself.view.custom.commandStatus = \"Accepted: Abort\"\n\texcept Exception as exc:\n\t\tself.view.custom.commandStatus = \"Rejected: \" + str(exc)\n"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.input.button",
+            "version": 0,
+            "meta": {
+              "name": "SensorFault"
+            },
+            "position": {
+              "basis": "150px",
+              "shrink": 0
+            },
+            "props": {
+              "text": "Inject sensor fault"
+            },
+            "custom": {},
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "isGood({[default]TemaTraining/StateCode}) && {[default]TemaTraining/StateCode}>=1 && {[default]TemaTraining/StateCode}<=8"
+                  }
+                }
+              }
+            },
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "type": "script",
+                  "scope": "G",
+                  "config": {
+                    "script": "\ttry:\n\t\tresult = tema.command(\"sensor-fault\")\n\t\tself.view.custom.commandStatus = \"Accepted: Inject sensor fault\"\n\texcept Exception as exc:\n\t\tself.view.custom.commandStatus = \"Rejected: \" + str(exc)\n"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "ia.display.label",
+        "version": 0,
+        "meta": {
+          "name": "CommandStatus"
+        },
+        "position": {
+          "basis": "45px",
+          "shrink": 0
+        },
+        "props": {
+          "text": "",
+          "style": {
+            "fontSize": 13,
+            "color": "#173b3a"
+          }
+        },
+        "custom": {},
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "{view.custom.commandStatus}"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "ia.chart.powerchart",
+        "version": 0,
+        "meta": {
+          "name": "History"
+        },
+        "position": {
+          "basis": "350px",
+          "shrink": 0
+        },
+        "props": {
+          "config": {
+            "mode": "realtime",
+            "unitOfTime": 5,
+            "measureOfTime": "minutes"
+          },
+          "pens": [
+            {
+              "name": "Temperature",
+              "enabled": true,
+              "visible": true,
+              "selectable": true,
+              "axis": "",
+              "plot": 0,
+              "data": {
+                "source": "histprov:TemaHistory:/drv:TemaIgnition:default:/tag:tematraining/temperature"
+              },
+              "display": {
+                "type": "line",
+                "styles": {
+                  "normal": {
+                    "stroke": {
+                      "color": "#18796e",
+                      "width": 2
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Setpoint",
+              "enabled": true,
+              "visible": true,
+              "selectable": true,
+              "axis": "",
+              "plot": 0,
+              "data": {
+                "source": "histprov:TemaHistory:/drv:TemaIgnition:default:/tag:tematraining/setpoint"
+              },
+              "display": {
+                "type": "line",
+                "styles": {
+                  "normal": {
+                    "stroke": {
+                      "color": "#c79b59",
+                      "width": 2
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Volume",
+              "enabled": true,
+              "visible": true,
+              "selectable": true,
+              "axis": "",
+              "plot": 0,
+              "data": {
+                "source": "histprov:TemaHistory:/drv:TemaIgnition:default:/tag:tematraining/volume"
+              },
+              "display": {
+                "type": "line",
+                "styles": {
+                  "normal": {
+                    "stroke": {
+                      "color": "#3984b4",
+                      "width": 2
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "custom": {}
+      },
+      {
+        "type": "ia.display.label",
+        "version": 0,
+        "meta": {
+          "name": "AlarmsTitle"
+        },
+        "position": {
+          "basis": "45px",
+          "shrink": 0
+        },
+        "props": {
+          "text": "Gateway alarm status \u00b7 acknowledge and inspect native alarms",
+          "style": {
+            "fontSize": 16,
+            "color": "#173b3a"
+          }
+        },
+        "custom": {}
+      },
+      {
+        "type": "ia.display.alarmstatustable",
+        "version": 0,
+        "meta": {
+          "name": "Alarms"
+        },
+        "position": {
+          "basis": "260px",
+          "shrink": 0
+        },
+        "props": {},
+        "custom": {}
+      }
+    ]
+  }
+}

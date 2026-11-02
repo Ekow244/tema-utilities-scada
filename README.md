@@ -12,6 +12,12 @@ Open the [GitHub Pages demo](https://Ekow244.github.io/tema-utilities-scada/), s
 
 Each visitor runs an isolated simulation in their browser at a nominal 20× speed. Recipes and recent history use local browser storage when available. No sign-in or backend service is required.
 
+## Ignition integration source
+
+The [`ignition/` package](ignition/README.md) targets Ignition Standard 8.1.48 with native Modbus tag configuration, a Perspective screen source, an alarm-pipeline assembly specification, project scripts and a separate PostgreSQL historian setup.
+
+**Gateway commissioning and native acceptance are still required.** Source/model tests do not establish that the Perspective screen, pipeline or historian have run successfully in Ignition. The local Gateway is available at http://localhost:9088/ for user-controlled licence acceptance and administrator setup. The public Pages demo remains browser-only.
+
 ## PLC and I/O technician demonstration
 
 Open **PLC & I/O bench** in the demo. The independent virtual fill/drain station executes nine ladder networks with a 100 ms scan: true/false contacts, parallel seal-in branches, rising-edge blocks, ordinary coils and a TON watchdog. The displayed rung definitions drive the interpreter; this is not a decorative ladder overlay.

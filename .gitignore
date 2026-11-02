@@ -6,3 +6,5 @@ pages/
 .env
 runs/**/samples.csv
 pages-preview.png
+ignition/dist/
+ignition/evidence/local-*.json

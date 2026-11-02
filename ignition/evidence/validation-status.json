@@ -1,0 +1,11 @@
+{
+  "target": "Ignition Standard 8.1.48",
+  "source_checks": "Automated configuration, Modbus mapping and project-script contract tests are provided",
+  "gateway_reached": "Commissioning licence screen at localhost:9088",
+  "gateway_runtime_validation": "NOT_RUN",
+  "perspective_runtime_rendering": "NOT_RUN",
+  "native_alarm_pipeline": "DESIGNER_ASSEMBLY_REQUIRED",
+  "native_sql_historian": "GATEWAY_CONFIGURATION_REQUIRED",
+  "blocking_prerequisite": "User must accept vendor licence and create administrator credentials",
+  "claim": "Integration source package; not a completed or commissioned Ignition deployment"
+}

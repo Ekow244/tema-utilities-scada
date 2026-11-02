@@ -1,0 +1,18 @@
+{
+  "format": "Designer assembly specification; not a native pipeline export",
+  "project": "TemaIgnition",
+  "name": "LocalAudit",
+  "dropout": {"acknowledged": true, "cleared": true, "shelved": true},
+  "blocks": [
+    {"id":"start","type":"Start","next":"record_active"},
+    {"id":"record_active","type":"Script","script":"tema.record_alarm(event, 'active')","next":"delay"},
+    {"id":"delay","type":"Delay","seconds":10,"next":"record_unacknowledged"},
+    {"id":"record_unacknowledged","type":"Script","script":"tema.record_alarm(event, 'unacknowledged_10s')","next":null}
+  ],
+  "attach_to": [
+    {"tag":"[default]TemaTraining/SensorFault","alarm":"TemperatureSignalInvalid"},
+    {"tag":"[default]TemaTraining/StateCode","alarm":"BatchFaulted"},
+    {"tag":"[default]TemaTraining/Temperature","alarm":"TemperatureHigh"}
+  ],
+  "external_notifications": false
+}

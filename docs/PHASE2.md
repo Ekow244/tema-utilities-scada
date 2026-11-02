@@ -88,7 +88,7 @@ Unit ID 1, TCP port 1502 inside the simulator container, function 04 (read input
 | 8 | Discharge pump command | 0 stopped, 1 running |
 | 9 | Rinse valve command | 0 closed, 1 open |
 
-State codes 0–14: IDLE, PRECHECK, FILL, HEAT, HOLD, DISCHARGE, CIP_FILL, CIP_RINSE, CIP_DRAIN, COMPLETE, PAUSED, ABORTING, ABORTED, FAULTED.
+State codes 0–13: IDLE, PRECHECK, FILL, HEAT, HOLD, DISCHARGE, CIP_FILL, CIP_RINSE, CIP_DRAIN, COMPLETE, PAUSED, ABORTING, ABORTED, FAULTED.
 
 Pump command is not proof of flow: an injected pump failure can leave the command running with no discharge. Temperature remains the last simulated numeric value with BAD quality after sensor failure; consumers must check quality. A failed Modbus read returns HTTP 503 and Node-RED suppresses that snapshot. Consumers must use the last timestamp to detect stale telemetry; a retained message alone does not prove the plant is online.
 

@@ -1,0 +1,12 @@
+protocol_offset,ignition_address,opc_item_path,tag,divide_by,unit
+0,1,[TemaSim]1.IRUS1,Volume,100,L
+1,2,[TemaSim]1.IRUS2,Temperature,100,degC
+2,3,[TemaSim]1.IRUS3,Setpoint,100,degC
+3,4,[TemaSim]1.IRUS4,HeaterPercent,100,%
+4,5,[TemaSim]1.IRUS5,QualifiedHold,10,s
+5,6,[TemaSim]1.IRUS6,StateCode,1,
+6,7,[TemaSim]1.IRUS7,SensorFault,1,
+7,8,[TemaSim]1.IRUS8,InletOpen,1,
+8,9,[TemaSim]1.IRUS9,DrainCommand,1,
+9,10,[TemaSim]1.IRUS10,RinseOpen,1,
+10,11,[TemaSim]1.IRUS11,SupplyVolume,100,L

@@ -1,0 +1,303 @@
+{
+  "tags": [
+    {
+      "name": "TemaTraining",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "Raw",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "name": "Volume",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS1",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "Temperature",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS2",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "Setpoint",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS3",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "HeaterPercent",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS4",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "QualifiedHold",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS5",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "StateCode",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS6",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "SensorFault",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS7",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "InletOpen",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS8",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "DrainCommand",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS9",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "RinseOpen",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS10",
+              "accessRights": "Read_Only"
+            },
+            {
+              "name": "SupplyVolume",
+              "tagType": "AtomicTag",
+              "valueSource": "opc",
+              "dataType": "Int4",
+              "opcServer": "Ignition OPC UA Server",
+              "opcItemPath": "[TemaSim]1.IRUS11",
+              "accessRights": "Read_Only"
+            }
+          ]
+        },
+        {
+          "name": "Volume",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Float8",
+          "expression": "{[.]Raw/Volume} / 100.0",
+          "engUnit": "L",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0
+        },
+        {
+          "name": "Temperature",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Float8",
+          "expression": "{[.]Raw/Temperature} / 100.0",
+          "engUnit": "degC",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0,
+          "alarms": [
+            {
+              "name": "TemperatureHigh",
+              "priority": "High",
+              "mode": "AboveValue",
+              "setpointA": 80.0,
+              "deadband": 2.0,
+              "timeOnDelaySeconds": 2.0,
+              "timeOffDelaySeconds": 1.0
+            }
+          ]
+        },
+        {
+          "name": "Setpoint",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Float8",
+          "expression": "{[.]Raw/Setpoint} / 100.0",
+          "engUnit": "degC",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0
+        },
+        {
+          "name": "HeaterPercent",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Float8",
+          "expression": "{[.]Raw/HeaterPercent} / 100.0",
+          "engUnit": "%",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0
+        },
+        {
+          "name": "QualifiedHold",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Float8",
+          "expression": "{[.]Raw/QualifiedHold} / 10.0",
+          "engUnit": "s",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0
+        },
+        {
+          "name": "StateCode",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Int4",
+          "expression": "{[.]Raw/StateCode}",
+          "engUnit": "",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0,
+          "alarms": [
+            {
+              "name": "BatchFaulted",
+              "priority": "High",
+              "mode": "Equality",
+              "setpointA": 13
+            }
+          ]
+        },
+        {
+          "name": "SensorFault",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Boolean",
+          "expression": "{[.]Raw/SensorFault} != 0",
+          "engUnit": "",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0,
+          "alarms": [
+            {
+              "name": "TemperatureSignalInvalid",
+              "priority": "Critical",
+              "mode": "Equality",
+              "setpointA": 1
+            }
+          ]
+        },
+        {
+          "name": "InletOpen",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Boolean",
+          "expression": "{[.]Raw/InletOpen} != 0",
+          "engUnit": "",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0
+        },
+        {
+          "name": "DrainCommand",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Boolean",
+          "expression": "{[.]Raw/DrainCommand} != 0",
+          "engUnit": "",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0
+        },
+        {
+          "name": "RinseOpen",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Boolean",
+          "expression": "{[.]Raw/RinseOpen} != 0",
+          "engUnit": "",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0
+        },
+        {
+          "name": "SupplyVolume",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "Float8",
+          "expression": "{[.]Raw/SupplyVolume} / 100.0",
+          "engUnit": "L",
+          "historyEnabled": true,
+          "historyProvider": "TemaHistory",
+          "sampleMode": "Periodic",
+          "historySampleRate": 1,
+          "historySampleRateUnits": "SEC",
+          "historicalDeadband": 0.0
+        },
+        {
+          "name": "StateName",
+          "tagType": "AtomicTag",
+          "valueSource": "expr",
+          "dataType": "String",
+          "expression": "case({[.]StateCode}, 0,\"Idle\", 1,\"Precheck\", 2,\"Fill\", 3,\"Heat\", 4,\"Hold\", 5,\"Discharge\", 6,\"Cip Fill\", 7,\"Cip Rinse\", 8,\"Cip Drain\", 9,\"Complete\", 10,\"Paused\", 11,\"Aborting\", 12,\"Aborted\", 13,\"Faulted\", \"Unknown\")"
+        }
+      ]
+    }
+  ]
+}

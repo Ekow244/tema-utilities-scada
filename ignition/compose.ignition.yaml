@@ -1,0 +1,33 @@
+# Merge from the repository root; no licence acceptance or admin credentials are seeded.
+services:
+  ignition:
+    image: inductiveautomation/ignition:8.1.48
+    ports:
+      - "127.0.0.1:9088:8088"
+    environment:
+      ACCEPT_IGNITION_EULA: "N"
+      TZ: Africa/Accra
+    command: ["-n", "TemaIgnition", "-m", "1024"]
+    volumes:
+      - ignition-data:/usr/local/bin/ignition/data
+      - ./ignition:/training:ro
+    depends_on:
+      - simulator
+      - ignition-db
+  ignition-db:
+    image: postgres:16.6-alpine
+    environment:
+      POSTGRES_DB: tema_ignition
+      POSTGRES_USER: ignition
+      POSTGRES_PASSWORD: local-ignition-demo-only
+    volumes:
+      - ignition-db-data:/var/lib/postgresql/data
+      - ./ignition/sql/001_pipeline.sql:/docker-entrypoint-initdb.d/001_pipeline.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ignition -d tema_ignition"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+volumes:
+  ignition-data:
+  ignition-db-data:

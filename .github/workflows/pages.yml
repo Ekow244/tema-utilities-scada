@@ -39,6 +39,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Initialize test schema
         run: python -c "import os,psycopg; from pathlib import Path; c=psycopg.connect(os.environ['DATABASE_URL'],autocommit=True); c.execute(Path('deploy/schema.sql').read_text()); c.close()"
+      - run: python scripts/build_ignition.py
       - run: python -m unittest discover -s tests -v
       - run: node --test tests/*.test.cjs
       - run: node scripts/build_plc_docs.cjs
@@ -47,6 +48,16 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: pages
+      - name: Upload Ignition source package (runtime acceptance pending)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ignition-source-package
+          path: |
+            ignition/dist/TemaIgnition-source.zip
+            ignition/tags/
+            ignition/pipelines/
+            ignition/sql/
+            ignition/README.md
   deploy:
     environment:
       name: github-pages

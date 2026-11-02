@@ -1,0 +1,11 @@
+{
+  "pages": {
+    "/": {
+      "viewPath": "Overview",
+      "title": "Tema Utilities Lab"
+    }
+  },
+  "sharedDocks": {
+    "cornerPriority": "top-bottom"
+  }
+}
