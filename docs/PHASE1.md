@@ -58,14 +58,6 @@ Normal overshoot is 2.194°C above target. This initial tuning completes the req
 
 Six tests cover the full state sequence, qualified hold completion, safe terminal outputs, sensor failure, pump timeout, pause/resume/abort, recipe/precheck validation, PID saturation and tracking.
 
-## Interview walkthrough
-
-1. Explain the equipment, recipe and state transitions.
-2. Run the normal scenario and open its temperature trend.
-3. Show the HOLD timer rule and discuss measured overshoot and tuning tradeoffs.
-4. Run the sensor and pump faults; show the event reasons and final actuator states.
-5. Explain how the controller's `command`, `tick`, and `sample` interface can support a future browser HMI.
-
 ## Next milestone
 
 Add a local web dashboard with live state, tank level, temperature trend and start/pause/resume/abort controls, then a WebGL scene driven by the same telemetry. Modbus, MQTT, Node-RED, SQL historian, Docker and public hosting are not implemented in Phase 1. CSV/JSON outputs are local run evidence rather than a production historian.

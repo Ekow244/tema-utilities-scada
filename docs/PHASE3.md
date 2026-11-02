@@ -4,16 +4,6 @@ Open **http://localhost:8080/** after `docker compose up -d --build`.
 
 The concept is **Tema Utilities Lab**, a fictional Ghanaian industrial training facility with an independent green-and-copper visual identity and a Ghana flag accent. No company branding, employment affiliation or real operational data is represented. The supply strip's 415 V / 50 Hz values are nominal illustrative references, not measured electrical signals. See the [PLC training package](../plc/README.md) for the new fill/drain ladder station.
 
-## Interview demo, about two minutes
-
-1. Choose **Tema · quick demonstration** under Recipe for new batch, then **Prepare new batch**. Check the prepared recipe label before starting.
-2. **Start batch**. Explain fill permissives, the heater's level interlock, and the scan-based sequence. Watch liquid level, flow animation and temperature respond.
-3. **Pause**, explain that outputs turn off while the thermal model continues, then **Resume**. Change the trend selection to inspect heater output or vessel level.
-4. In **Demonstrate a fault**, inject a temperature sensor failure. Show BAD signal quality, heater demand dropping to zero, and the P1 alarm.
-5. Open **Alarm console** and acknowledge it. Acknowledgement records operator response; it does not clear the fault or re-enable the heater.
-6. Select a recipe and **Prepare new batch** again. The previous final snapshot is committed to SQL before its controller is replaced.
-7. Open **Batch historian**, inspect the prior record, review commands, alarms and state transitions, and export its process samples as CSV.
-
 ## Included behavior
 
 - Responsive HMI with animated SVG tank levels, flow paths, heater coil and equipment states.

@@ -32,16 +32,6 @@ The I/O model has seven digital inputs and three digital outputs. Inputs use 24 
 
 The physical high-level contact is **NC below 40 L**. Its software HIGH_OK contact tests a **true** bit, without logical negation. Reaching high level or opening its signal conductor makes HIGH_OK false and inhibits fill. LOW_WET is true above 0.1 L and stops drain at empty. Only a fresh start edge can reseal a dropped request after repairing a wire or restoring stop.
 
-## Three-minute interview walkthrough
-
-1. **Normal operation:** reset the station, Start Fill, follow R00/R05/R06, then watch the high-level input open around 40 L. Start Drain and watch LOW_WET drop near empty. Filling and draining each take about 20 seconds at 2 L/s.
-2. **Input fault:** reset the station, select Open high-level wire 104 and press Start Fill. Find I0.3 off, HIGH_OK contacts open, and Q0.0 off. Compare the virtual test points: supply and contact output are 24 V, while X1:04 is 0 V. Explain the missing permissive before considering a replacement output device.
-3. **Recovery:** select Healthy field wiring. Verify the input returns without automatic restart. Press Start Fill again and verify controlled filling resumes.
-4. **Actuator fault:** reset the station, select Inlet valve stuck closed and Start Fill. Q0.0 energizes but level does not rise. After 30 seconds, TON latches FAULT and removes the output. Restore the field condition, Reset Fault, then use a fresh Start.
-5. **Explain the distinction:** a wiring input fault prevents the fill request from sealing; a stuck valve produces a valid output command with no process response, then times out.
-
-The meter panel shows model-generated nodes, not evidence of real electrical measurements. A 0 V high-level input at a full vessel is normal, while a 24 V upstream / 0 V downstream split below the target identifies the injected open path. The exercise assumes an input pull-down; a real floating conductor or faulty input could behave differently.
-
 ## Reproduce the evidence
 
 ```sh

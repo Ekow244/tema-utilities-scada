@@ -16,7 +16,7 @@ Each visitor runs an isolated simulation in their browser at a nominal 20× spee
 
 Open **PLC & I/O bench** in the demo. The independent virtual fill/drain station executes nine ladder networks with a 100 ms scan: true/false contacts, parallel seal-in branches, rising-edge blocks, ordinary coils and a TON watchdog. The displayed rung definitions drive the interpreter; this is not a decorative ladder overlay.
 
-The bench includes a live I/O image, virtual circuit voltages, stop/high/low-level permissives, overload and stuck-valve faults, and an open-conductor troubleshooting exercise. [Engineering package and walkthrough](plc/README.md) · [Recorded diagnosis](scada/web/training/fault-report.md) · [24 V wiring concept](scada/web/training/wiring.svg).
+The bench includes a live I/O image, virtual circuit voltages, stop/high/low-level permissives, overload and stuck-valve faults, and an open-conductor troubleshooting exercise. [Engineering package](plc/README.md) · [Recorded diagnosis](scada/web/training/fault-report.md) · [24 V wiring concept](scada/web/training/wiring.svg).
 
 **Scope:** an educational, non-vendor PLC simulator with virtual I/O. No physical PLC, vendor IDE, panel commissioning or real meter measurements are claimed. The main thermal batch and this ladder bench are independent.
 
@@ -40,7 +40,7 @@ With Docker Desktop running, from this repository:
 docker compose up -d --build
 ```
 
-Open [the HMI](http://localhost:8080/) and [Node-RED](http://localhost:1880/). Only these localhost ports are published. See [integration setup](docs/PHASE2.md) and [HMI walkthrough](docs/PHASE3.md).
+Open [the HMI](http://localhost:8080/) and [Node-RED](http://localhost:1880/). Only these localhost ports are published. See [integration setup](docs/PHASE2.md) and [HMI documentation](docs/PHASE3.md).
 
 ```text
 Python process/controller → Modbus TCP → HTTP bridge → Node-RED → MQTT → PostgreSQL
@@ -96,6 +96,6 @@ Browser mode starts a fresh process when the page reloads. Stored unfinished bat
 
 - [Phase 1: process model and control behavior](docs/PHASE1.md)
 - [Phase 2: field communications and SQL historian](docs/PHASE2.md)
-- [Phase 3: HMI, alarm philosophy and interview walkthrough](docs/PHASE3.md)
+- [Phase 3: HMI and alarm philosophy](docs/PHASE3.md)
 
 ![HMI preview](hmi-preview.png)
