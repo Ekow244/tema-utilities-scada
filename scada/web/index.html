@@ -1,19 +1,20 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#102d52"><title>ECG-inspired Utilities Lab · SCADA Demo</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#102d52"><title>Tema Utilities Lab · Automation Training</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script><script src="/plc-engine.js" defer></script><script src="/plc-panel.js" defer></script></head>
 <body>
 <aside class="sidebar">
-  <a class="brand" href="/" aria-label="Utilities lab home"><span class="brand-symbol">ϟ</span><span>ECG<span class="brand-sub">INDUSTRIAL LAB</span></span></a>
+  <a class="brand" href="/" aria-label="Utilities lab home"><span class="brand-symbol">TU</span><span>TEMA<span class="brand-sub">UTILITIES LAB</span></span></a>
   <div class="facility-label">CONCEPT FACILITY</div><div class="facility-name">Tema Utilities Lab<span>Greater Accra · Ghana</span></div>
   <nav aria-label="Main navigation">
     <button class="nav active" data-view="overview"><span>▦</span>Process overview</button>
     <button class="nav" data-view="recipes"><span>≡</span>Recipe library</button>
     <button class="nav" data-view="alarms"><span>♧</span>Alarm console <b id="nav-alarm-count">0</b></button>
+    <button class="nav" data-view="plc"><span>⌘</span>PLC &amp; I/O bench</button>
     <button class="nav" data-view="history"><span>◷</span>Batch historian</button>
   </nav>
-  <div class="side-bottom"><span class="ghana"><i></i><i>★</i><i></i></span><p>Built for industrial learning.<br>Powered by curiosity.</p><div class="side-version">SCADA / MVP 03 <span>SIMULATION</span></div></div>
+  <div class="side-bottom"><span class="ghana"><i></i><i>★</i><i></i></span><p>Built for industrial learning.<br>Powered by curiosity.</p><div class="side-version">SCADA / TRAINING <span>SIMULATION</span></div></div>
 </aside>
 <div class="workspace">
-<div class="concept-bar">Independent portfolio simulation <span>·</span> ECG-inspired concept · No connection to ECG systems</div>
+<div class="concept-bar">Independent automation portfolio <span>·</span> Fictional Ghanaian training facility · All data simulated</div>
 <header><div class="breadcrumb">TEMA UTILITIES LAB <span>/</span> THERMAL PROCESS SKID</div><div class="header-right"><span id="connection" class="status disconnected">Connecting</span><time id="clock">— GMT</time><span class="avatar">OP</span></div></header>
 <main>
 <div class="page-title"><div><div class="eyebrow">OPERATIONS / UNIT 01</div><h1 id="page-heading">Process overview</h1><p id="page-subtitle">A live view of your thermal batch process.</p></div><div class="session"><span class="live-dot"></span> LIVE SIMULATION <b id="speed">20×</b></div></div>
@@ -58,6 +59,7 @@
 </section>
 <section id="view-recipes" class="view" hidden><div class="recipe-layout"><section class="panel"><div class="panel-title"><h2>Versioned recipe library</h2><span class="tag">SQL STORED</span></div><div id="recipe-list"></div></section><section class="panel recipe-editor"><div class="panel-title"><h2>Create recipe version</h2></div><p class="hint">Saved versions remain unchanged. Each batch keeps its own recipe snapshot.</p><form id="recipe-form"><label>Recipe name<input name="name" value="Tema · custom training" maxlength="80" required></label><div class="form-grid"><label>Fill volume · L<input name="volume" type="number" min="10" max="100" step="1" value="60" required></label><label>Setpoint · °C<input name="setpoint" type="number" min="25" max="75" step="0.5" value="60" required></label><label>Hold time · s<input name="hold_seconds" type="number" min="1" max="1200" value="120" required></label><label>Rinse volume · L<input name="rinse_volume" type="number" min="1" max="100" value="20" required></label><label>Rinse dwell · s<input name="rinse_seconds" type="number" min="1" max="300" value="30" required></label></div><button class="button primary" type="submit">Save new version</button></form></section></div></section>
 <section id="view-alarms" class="view" hidden><div class="alarm-info"><strong>Priorities with purpose.</strong> P1: immediate process response · P2: prompt operator investigation. P2 alarms can be shelved for 60 real seconds. Shelving does not bypass interlocks.</div><section class="panel"><div class="panel-title"><h2>Current batch alarms</h2><span class="tag">ISA-18.2-INSPIRED</span></div><div id="alarm-console"></div></section><section class="panel audit-panel"><div class="panel-title"><h2>Alarm activity</h2></div><div id="alarm-audit"></div></section></section>
+<section id="view-plc" class="view" hidden><div id="plc-bench"><div class="empty">Loading ladder simulator…</div></div></section>
 <section id="view-history" class="view" hidden><section class="panel"><div class="panel-title"><h2>Batch records</h2><button id="refresh-history" class="button secondary">Refresh records</button></div><div id="history-list" class="table-scroll"></div></section><section id="history-detail" class="panel audit-panel" hidden></section></section>
 <footer><span><i class="live-dot"></i> PYTHON CONTROLS · MODBUS TCP · MQTT · SQL HISTORIAN</span><span>Fictional training facility · Tema, Ghana</span></footer>
 </main></div><div id="toast" role="status" aria-live="polite" hidden></div>

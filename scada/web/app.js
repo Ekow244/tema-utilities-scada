@@ -20,9 +20,10 @@ function showView(next) {
   view=next;
   document.querySelectorAll('.view').forEach(el=>el.hidden=el.id!==`view-${next}`);
   document.querySelectorAll('.nav').forEach(el=>el.classList.toggle('active',el.dataset.view===next));
-  const headings={overview:['Process overview','A live view of your thermal batch process.'],recipes:['Recipe library','Repeatable batches begin with a well-defined recipe.'],alarms:['Alarm console','Prioritized conditions, clear responses and a complete audit.'],history:['Batch historian','Trace the recipe, sequence and actions behind every batch.']};
+  const headings={plc:['PLC & I/O bench','Follow the signal. Read the rung. Find the fault.'],overview:['Process overview','A live view of your thermal batch process.'],recipes:['Recipe library','Repeatable batches begin with a well-defined recipe.'],alarms:['Alarm console','Prioritized conditions, clear responses and a complete audit.'],history:['Batch historian','Trace the recipe, sequence and actions behind every batch.']};
   $('page-heading').textContent=headings[next][0]; $('page-subtitle').textContent=headings[next][1];
   if(next==='history') loadHistory();
+  if(next==='plc') $('speed').textContent='1×';
 }
 document.querySelectorAll('[data-view]').forEach(el=>el.onclick=()=>showView(el.dataset.view));
 document.querySelectorAll('[data-goto]').forEach(el=>el.onclick=()=>showView(el.dataset.goto));
@@ -77,7 +78,7 @@ function render(s) {
   $('power').textContent=`${(v('heater')*.3).toFixed(1)} kW thermal input`;
   $('level-bar').style.width=`${Math.min(100,v('volume')/120*100)}%`;
   $('state').textContent=title(s.state);$('state').style.color=s.state==='FAULTED'?'var(--red)':'';
-  $('elapsed').textContent=`${duration(s.sim_time)} simulated`;$('batch-short').textContent=`#${s.batch_id.slice(0,6)}`;$('speed').textContent=`${s.sim_speed}×`;
+  $('elapsed').textContent=`${duration(s.sim_time)} simulated`;$('batch-short').textContent=`#${s.batch_id.slice(0,6)}`;$('speed').textContent=view==='plc'?'1×':`${s.sim_speed}×`;
   $('tank-temperature').textContent=good?`${v('temperature').toFixed(1)} °C`:'SIGNAL BAD';
   $('tank-volume').textContent=`${v('volume').toFixed(1)} / 120 L`;
   $('supply-level').textContent=`${v('supply').toFixed(0)} L`;

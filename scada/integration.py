@@ -157,11 +157,18 @@ def handler(runtime):
         def do_GET(self):
             try:
                 path = urlsplit(self.path).path
-                if path in ('/', '/app.js', '/style.css'):
-                    name = 'index.html' if path == '/' else path[1:]
+                assets = {'/': ('index.html', 'text/html'), '/app.js': ('app.js', 'text/javascript'),
+                          '/style.css': ('style.css', 'text/css'), '/plc-engine.js': ('plc-engine.js', 'text/javascript'),
+                          '/plc-panel.js': ('plc-panel.js', 'text/javascript'), '/plc-program.json': ('plc-program.json', 'application/json')}
+                for asset, mime in [('io-list.csv', 'text/csv'), ('wiring.svg', 'image/svg+xml'),
+                                    ('ladder.svg', 'image/svg+xml'), ('fault-report.md', 'text/plain'),
+                                    ('ladder-program.json', 'application/json'), ('open-wire-diagnosis.json', 'application/json')]:
+                    assets['/training/' + asset] = ('training/' + asset, mime)
+                if path in assets:
+                    name, mime = assets[path]
                     data = (Path(__file__).parent / 'web' / name).read_bytes()
                     self.send_response(200)
-                    self.send_header('Content-Type', {'index.html':'text/html', 'app.js':'text/javascript', 'style.css':'text/css'}[name] + '; charset=utf-8')
+                    self.send_header('Content-Type', mime + '; charset=utf-8')
                     self.send_header('Content-Length', str(len(data)))
                     self.send_header('Cache-Control', 'no-cache')
                     self.end_headers()

@@ -1,8 +1,13 @@
 import socket
 import unittest
+import json
+import threading
+import urllib.request
+import urllib.error
+from http.server import ThreadingHTTPServer
 
 try:
-    from scada.integration import Runtime
+    from scada.integration import Runtime, handler
 except ModuleNotFoundError:
     Runtime = None
 
@@ -49,3 +54,23 @@ class ModbusTests(unittest.TestCase):
         self.runtime.server.stop()
         with self.assertRaises(ConnectionError):
             self.runtime.snapshot()
+
+    def test_plc_assets_served_without_exposing_source_paths(self):
+        server = ThreadingHTTPServer(('127.0.0.1', 0), handler(self.runtime))
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        base = f'http://127.0.0.1:{server.server_port}'
+        try:
+            with urllib.request.urlopen(base + '/plc-program.json') as response:
+                self.assertEqual(len(json.load(response)['rungs']), 9)
+            with urllib.request.urlopen(base + '/training/wiring.svg') as response:
+                self.assertEqual(response.headers.get_content_type(), 'image/svg+xml')
+                self.assertIn(b'TUL-PLC-001', response.read())
+            with self.assertRaises(urllib.error.HTTPError) as error:
+                urllib.request.urlopen(base + '/training/../../controller.py')
+            self.assertEqual(error.exception.code, 404)
+            error.exception.close()
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join()

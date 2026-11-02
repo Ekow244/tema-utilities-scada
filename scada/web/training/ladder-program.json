@@ -1,0 +1,228 @@
+{
+  "name": "Tema fill / drain trainer",
+  "runtime": "Educational ladder scan interpreter; no vendor PLC or physical hardware",
+  "scan_seconds": 0.1,
+  "target_litres": 40,
+  "io": [
+    {
+      "address": "I0.0",
+      "tag": "STOP_OK",
+      "type": "DI",
+      "device": "S0 functional stop, NC",
+      "terminal": "X1:01",
+      "wire": "101",
+      "normal": "24 V when released",
+      "purpose": "Drops both request latches and outputs when opened"
+    },
+    {
+      "address": "I0.1",
+      "tag": "START_PB",
+      "type": "DI",
+      "device": "S1 fill start, NO",
+      "terminal": "X1:02",
+      "wire": "102",
+      "normal": "0 V when released",
+      "purpose": "Rising edge starts filling"
+    },
+    {
+      "address": "I0.2",
+      "tag": "RESET_PB",
+      "type": "DI",
+      "device": "S2 fault reset, NO",
+      "terminal": "X1:03",
+      "wire": "103",
+      "normal": "0 V when released",
+      "purpose": "Resets timeout after its condition is removed"
+    },
+    {
+      "address": "I0.3",
+      "tag": "HIGH_OK",
+      "type": "DI",
+      "device": "LSH-101 high-level switch, NC below target",
+      "terminal": "X1:04",
+      "wire": "104",
+      "normal": "24 V below 40 L; 0 V at high level",
+      "purpose": "Fill permissive; broken wire inhibits filling"
+    },
+    {
+      "address": "I0.4",
+      "tag": "LOW_WET",
+      "type": "DI",
+      "device": "LSL-101 low-level switch, NO when wetted",
+      "terminal": "X1:05",
+      "wire": "105",
+      "normal": "0 V at empty; 24 V above 0.1 L",
+      "purpose": "Stops the drain pump at empty"
+    },
+    {
+      "address": "I0.5",
+      "tag": "OL_OK",
+      "type": "DI",
+      "device": "F2 overload auxiliary 95-96, NC",
+      "terminal": "X1:06",
+      "wire": "106",
+      "normal": "24 V when overload healthy",
+      "purpose": "Latches a fault on overload trip"
+    },
+    {
+      "address": "I0.6",
+      "tag": "DRAIN_PB",
+      "type": "DI",
+      "device": "S3 drain request, NO",
+      "terminal": "X1:07",
+      "wire": "107",
+      "normal": "0 V when released",
+      "purpose": "Rising edge starts draining"
+    },
+    {
+      "address": "Q0.0",
+      "tag": "FILL_OUT",
+      "type": "DO",
+      "device": "K1 24 V interposing relay coil",
+      "terminal": "X2:01",
+      "wire": "201",
+      "normal": "0 V when idle",
+      "purpose": "K1 contact switches YV1 normally-closed inlet valve"
+    },
+    {
+      "address": "Q0.1",
+      "tag": "DRAIN_OUT",
+      "type": "DO",
+      "device": "K2 24 V interposing relay coil",
+      "terminal": "X2:02",
+      "wire": "202",
+      "normal": "0 V when idle",
+      "purpose": "K2 contact supplies simulated pump request; no mains shown"
+    },
+    {
+      "address": "Q0.2",
+      "tag": "ALARM_OUT",
+      "type": "DO",
+      "device": "H1 24 V fault lamp",
+      "terminal": "X2:03",
+      "wire": "203",
+      "normal": "0 V when no latched fault",
+      "purpose": "Displays timeout or overload fault"
+    }
+  ],
+  "rungs": [
+    {
+      "id": "R00",
+      "title": "Fill start edge",
+      "op": "R_TRIG",
+      "source": "START_PB",
+      "target": "START_EDGE"
+    },
+    {
+      "id": "R01",
+      "title": "Drain request edge",
+      "op": "R_TRIG",
+      "source": "DRAIN_PB",
+      "target": "DRAIN_EDGE"
+    },
+    {
+      "id": "R02",
+      "title": "Fill watchdog · 30 seconds",
+      "op": "TON",
+      "source": "FILL_OUT",
+      "preset": 30,
+      "target": "FILL_TIMEOUT"
+    },
+    {
+      "id": "R03",
+      "title": "Latched fault · set dominant",
+      "op": "OTE",
+      "branches": [
+        [
+          "FAULT",
+          "!RESET_PB"
+        ],
+        [
+          "FILL_TIMEOUT"
+        ],
+        [
+          "!OL_OK"
+        ]
+      ],
+      "target": "FAULT"
+    },
+    {
+      "id": "R04",
+      "title": "Drain seal-in · low-level and stop permissives",
+      "op": "OTE",
+      "series": [
+        "STOP_OK",
+        "OL_OK",
+        "!FAULT",
+        "!START_EDGE",
+        "LOW_WET"
+      ],
+      "branches": [
+        [
+          "DRAIN_EDGE"
+        ],
+        [
+          "DRAIN_REQ"
+        ]
+      ],
+      "target": "DRAIN_REQ"
+    },
+    {
+      "id": "R05",
+      "title": "Fill seal-in · high-level and opposing request interlock",
+      "op": "OTE",
+      "series": [
+        "STOP_OK",
+        "HIGH_OK",
+        "!FAULT",
+        "!DRAIN_EDGE",
+        "!DRAIN_REQ"
+      ],
+      "branches": [
+        [
+          "START_EDGE"
+        ],
+        [
+          "FILL_REQ"
+        ]
+      ],
+      "target": "FILL_REQ"
+    },
+    {
+      "id": "R06",
+      "title": "Fill relay output",
+      "op": "OTE",
+      "series": [
+        "STOP_OK",
+        "HIGH_OK",
+        "!FAULT",
+        "!DRAIN_REQ",
+        "FILL_REQ"
+      ],
+      "target": "FILL_OUT"
+    },
+    {
+      "id": "R07",
+      "title": "Drain relay output",
+      "op": "OTE",
+      "series": [
+        "STOP_OK",
+        "OL_OK",
+        "LOW_WET",
+        "!FAULT",
+        "!FILL_REQ",
+        "DRAIN_REQ"
+      ],
+      "target": "DRAIN_OUT"
+    },
+    {
+      "id": "R08",
+      "title": "Fault indication",
+      "op": "OTE",
+      "series": [
+        "FAULT"
+      ],
+      "target": "ALARM_OUT"
+    }
+  ]
+}

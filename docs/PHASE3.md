@@ -2,7 +2,7 @@
 
 Open **http://localhost:8080/** after `docker compose up -d --build`.
 
-The concept is **Tema Utilities Lab**, a fictional industrial training facility with Electricity Company of Ghana-inspired navy/gold styling and a Ghana flag accent. ECG's actual role is electricity distribution ([official profile](https://www.ecg.com.gh/index.php/en/about)). This project is independent, unaffiliated and contains no ECG operational data. The thermal water skid demonstrates automation skills in a utilities training setting; it is not a model of an actual ECG factory. The supply strip's 415 V / 50 Hz values are nominal illustrative references, not measured electrical signals.
+The concept is **Tema Utilities Lab**, a fictional Ghanaian industrial training facility with an independent green-and-copper visual identity and a Ghana flag accent. No company branding, employment affiliation or real operational data is represented. The supply strip's 415 V / 50 Hz values are nominal illustrative references, not measured electrical signals. See the [PLC training package](../plc/README.md) for the new fill/drain ladder station.
 
 ## Interview demo, about two minutes
 
@@ -62,4 +62,4 @@ python3 verify_hmi.py
 
 Install `requirements.txt` in a virtual environment to run the real Modbus tests. The database tests require DATABASE_URL and run inside the historian container. `verify_hmi.py` expects a fresh IDLE simulator; it saves `runs/hmi-verification.json` and leaves a fresh IDLE batch after checking recipe validation, active/stale command rejection, pause/resume, P1 acknowledgement, P2 shelving/unshelving and a complete normal batch.
 
-The HMI is local only. WebGL, public hosting, multi-visitor isolation and protected public controls are the next release. Browser assets require no JavaScript framework; Google Fonts are optional and fall back to system fonts if offline.
+The full-stack HMI remains local. A separate browser-only version is published on GitHub Pages, with isolated simulation state per visitor. WebGL and a hosted backend are not implemented. Browser assets require no JavaScript framework; Google Fonts are optional and fall back to system fonts if offline.

@@ -1,0 +1,105 @@
+{
+  "result": "PASS",
+  "environment": "Educational ladder interpreter; virtual voltage nodes, no physical meter or hardware",
+  "fault": "Open conductor 104 between the NC high-level contact and PLC I0.3 / X1:04",
+  "diagnosis": "24 V upstream and 0 V at the PLC input isolates the open signal path; the missing HIGH_OK condition opens R05 and R06",
+  "correction": "Restore the simulated conductor, verify input recovery, then issue a fresh start",
+  "evidence": [
+    {
+      "step": "Healthy empty vessel, before start",
+      "simulated_seconds": 0.2,
+      "tank_litres": 0,
+      "HIGH_OK": true,
+      "FILL_REQ": false,
+      "FILL_OUT": false,
+      "virtual_volts": {
+        "source_24v": 24,
+        "common_0v": 0,
+        "sensor_contact_output": 24,
+        "wire_104_upstream": 24,
+        "wire_104_plc_end": 24,
+        "plc_I0_3": 24
+      }
+    },
+    {
+      "step": "Fault injected: open wire 104 at X1:04; fill start attempted",
+      "simulated_seconds": 0.4,
+      "tank_litres": 0,
+      "HIGH_OK": false,
+      "FILL_REQ": false,
+      "FILL_OUT": false,
+      "virtual_volts": {
+        "source_24v": 24,
+        "common_0v": 0,
+        "sensor_contact_output": 24,
+        "wire_104_upstream": 24,
+        "wire_104_plc_end": 0,
+        "plc_I0_3": 0
+      }
+    },
+    {
+      "step": "Wire restored: input recovers; no automatic restart",
+      "simulated_seconds": 0.5,
+      "tank_litres": 0,
+      "HIGH_OK": true,
+      "FILL_REQ": false,
+      "FILL_OUT": false,
+      "virtual_volts": {
+        "source_24v": 24,
+        "common_0v": 0,
+        "sensor_contact_output": 24,
+        "wire_104_upstream": 24,
+        "wire_104_plc_end": 24,
+        "plc_I0_3": 24
+      }
+    },
+    {
+      "step": "Fresh start after repair: fill output energizes",
+      "simulated_seconds": 0.6,
+      "tank_litres": 0.2,
+      "HIGH_OK": true,
+      "FILL_REQ": true,
+      "FILL_OUT": true,
+      "virtual_volts": {
+        "source_24v": 24,
+        "common_0v": 0,
+        "sensor_contact_output": 24,
+        "wire_104_upstream": 24,
+        "wire_104_plc_end": 24,
+        "plc_I0_3": 24
+      }
+    },
+    {
+      "step": "Retest: high-level permissive opens and stops filling",
+      "simulated_seconds": 23.6,
+      "tank_litres": 40,
+      "HIGH_OK": false,
+      "FILL_REQ": false,
+      "FILL_OUT": false,
+      "virtual_volts": {
+        "source_24v": 24,
+        "common_0v": 0,
+        "sensor_contact_output": 0,
+        "wire_104_upstream": 0,
+        "wire_104_plc_end": 0,
+        "plc_I0_3": 0
+      }
+    },
+    {
+      "step": "Retest: drain completes and pump stops at low level",
+      "simulated_seconds": 46.6,
+      "tank_litres": 0,
+      "HIGH_OK": true,
+      "FILL_REQ": false,
+      "FILL_OUT": false,
+      "virtual_volts": {
+        "source_24v": 24,
+        "common_0v": 0,
+        "sensor_contact_output": 24,
+        "wire_104_upstream": 24,
+        "wire_104_plc_end": 24,
+        "plc_I0_3": 24
+      }
+    }
+  ]
+}

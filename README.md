@@ -4,13 +4,21 @@
 
 A Ghana-inspired industrial automation training project: batch sequencing, PID thermal control, animated tank graphics, recipe management, alarm handling, and batch traceability.
 
-**Independent portfolio simulation.** Tema Utilities Lab is a fictional facility with ECG-inspired styling. It is not affiliated with the Electricity Company of Ghana and uses no real ECG systems or operational data. The process models a water utilities training skid, including a simplified rinse rather than validated CIP.
+**Independent portfolio simulation.** Tema Utilities Lab is a fictional Ghanaian facility with its own green-and-copper identity. It represents no employer, utility company or real operating plant. The process models a water utilities training skid, including a simplified rinse rather than validated CIP.
 
 ## Try it
 
 Open the [GitHub Pages demo](https://Ekow244.github.io/tema-utilities-scada/), select a recipe, prepare a batch and start it. Watch fill → heat → hold → discharge → rinse, then inject a sensor or pump fault. Inspect the alarm response, acknowledge it, and review the batch record.
 
 Each visitor runs an isolated simulation in their browser at a nominal 20× speed. Recipes and recent history use local browser storage when available. No sign-in or backend service is required.
+
+## PLC and I/O technician demonstration
+
+Open **PLC & I/O bench** in the demo. The independent virtual fill/drain station executes nine ladder networks with a 100 ms scan: true/false contacts, parallel seal-in branches, rising-edge blocks, ordinary coils and a TON watchdog. The displayed rung definitions drive the interpreter; this is not a decorative ladder overlay.
+
+The bench includes a live I/O image, virtual circuit voltages, stop/high/low-level permissives, overload and stuck-valve faults, and an open-conductor troubleshooting exercise. [Engineering package and walkthrough](plc/README.md) · [Recorded diagnosis](scada/web/training/fault-report.md) · [24 V wiring concept](scada/web/training/wiring.svg).
+
+**Scope:** an educational, non-vendor PLC simulator with virtual I/O. No physical PLC, vendor IDE, panel commissioning or real meter measurements are claimed. The main thermal batch and this ladder bench are independent.
 
 ## Two execution modes
 
@@ -22,7 +30,7 @@ Each visitor runs an isolated simulation in their browser at a nominal 20× spee
 | Recipes and history | Browser storage, last 8 batches / 600 samples each | PostgreSQL recipe versions and historian |
 | Deployment | Static GitHub Pages | Local Docker Compose |
 
-The hosted demo does **not** connect to Python, PostgreSQL, MQTT, Modbus, ECG, or physical equipment. The repository contains the complete integration implementation. The current process graphic is SVG; WebGL is not implemented.
+The hosted demo does **not** connect to Python, PostgreSQL, MQTT, Modbus or physical equipment. The repository contains the complete integration implementation. The current process graphic is SVG; WebGL is not implemented.
 
 ## Run the full stack
 
@@ -58,7 +66,7 @@ These illustrate IEC 61131-3 and ISA-18.2 concepts; this is not certified PLC co
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/python -m unittest discover -s tests -v
-node --test tests/demo-engine.test.cjs
+node --test tests/*.test.cjs
 ```
 
 The two PostgreSQL tests need `DATABASE_URL`; alternatively run them inside the live stack:
@@ -75,11 +83,12 @@ The browser model matches the Python baseline: normal batch completion at 990 si
 ## Develop or publish the browser demo
 
 ```sh
+node scripts/build_plc_docs.cjs
 python3 scripts/build_pages.py
 python3 -m http.server 8090 --directory pages --bind 127.0.0.1
 ```
 
-Open http://localhost:8090/. The build uses relative asset paths so project-site hosting works. Pushes to `main` run Python and browser-model tests, build the static assets and deploy using the GitHub Pages workflow. There is no JavaScript dependency installation or bundler.
+Open http://localhost:8090/. The build uses relative asset paths so project-site hosting works. Pushes to `main` run Python and browser-model tests, build the static assets and deploy using the GitHub Pages workflow. The workflow also executes the ladder tests and regenerates the engineering evidence. There is no JavaScript dependency installation or bundler.
 
 Browser mode starts a fresh process when the page reloads. Stored unfinished batches are marked interrupted. History is local to the browser and capped; clearing site storage removes it. Background tabs may throttle simulation timing. No hosted SQL durability is claimed.
 
