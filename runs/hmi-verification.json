@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "sensor_batch": "5a5f8a20-d759-4f0f-8086-643a5ec5104d",
+  "pump_timeout_batch": "b67659b0-728c-42f3-81b4-e621442ce0f3",
+  "completed_batch": "867bc7bf-ebc5-4b41-9e05-262af7ce9530",
+  "recipe_id": "3a3cd1a1-99e9-45bf-91a8-01c1b6c3b9c7",
+  "checks": [
+    "recipe save and validation",
+    "reject stale batch command",
+    "block active recipe change",
+    "pause/resume",
+    "sensor trip",
+    "P1 shelving prohibited",
+    "alarm acknowledgement archived",
+    "P2 shelving and unshelving",
+    "normal full batch",
+    "final history committed before batch rollover"
+  ]
+}

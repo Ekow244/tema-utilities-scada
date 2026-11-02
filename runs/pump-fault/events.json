@@ -1,0 +1,38 @@
+[
+  {
+    "time": 0.0,
+    "previous": "IDLE",
+    "state": "PRECHECK",
+    "reason": ""
+  },
+  {
+    "time": 0.5,
+    "previous": "PRECHECK",
+    "state": "FILL",
+    "reason": ""
+  },
+  {
+    "time": 30.5,
+    "previous": "FILL",
+    "state": "HEAT",
+    "reason": ""
+  },
+  {
+    "time": 394.5,
+    "previous": "HEAT",
+    "state": "HOLD",
+    "reason": ""
+  },
+  {
+    "time": 910.0,
+    "previous": "HOLD",
+    "state": "DISCHARGE",
+    "reason": ""
+  },
+  {
+    "time": 1030.5,
+    "previous": "DISCHARGE",
+    "state": "FAULTED",
+    "reason": "DISCHARGE step timeout"
+  }
+]

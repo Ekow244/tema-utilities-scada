@@ -1,0 +1,15 @@
+{
+  "scenario": "pump-fault",
+  "final_state": "FAULTED",
+  "seconds": 1030.5,
+  "max_temperature": 62.194,
+  "reason": "DISCHARGE step timeout",
+  "recipe": {
+    "name": "Demo water batch",
+    "volume": 60.0,
+    "setpoint": 60.0,
+    "hold_seconds": 120.0,
+    "rinse_volume": 20.0,
+    "rinse_seconds": 30.0
+  }
+}

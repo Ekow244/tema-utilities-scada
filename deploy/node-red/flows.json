@@ -1,0 +1,192 @@
+[
+  {
+    "id": "phase2",
+    "type": "tab",
+    "label": "SCADA \u2014 Phase 2",
+    "info": "Modbus bridge \u2192 MQTT \u2192 PostgreSQL. Local simulation only."
+  },
+  {
+    "id": "broker",
+    "type": "mqtt-broker",
+    "name": "Private demo broker",
+    "broker": "mqtt",
+    "port": "1883",
+    "clientid": "scada-node-red",
+    "autoConnect": true,
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": false
+  },
+  {
+    "id": "poll",
+    "type": "inject",
+    "z": "phase2",
+    "name": "Poll every 500 ms",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "0.5",
+    "once": true,
+    "onceDelay": 2,
+    "payload": "",
+    "payloadType": "date",
+    "x": 140,
+    "y": 80,
+    "wires": [
+      [
+        "read"
+      ]
+    ]
+  },
+  {
+    "id": "read",
+    "type": "http request",
+    "z": "phase2",
+    "name": "Read actual Modbus through bridge",
+    "method": "GET",
+    "ret": "obj",
+    "url": "http://simulator:8080/telemetry",
+    "x": 430,
+    "y": 80,
+    "wires": [
+      [
+        "validate"
+      ]
+    ]
+  },
+  {
+    "id": "validate",
+    "type": "function",
+    "z": "phase2",
+    "name": "Validate telemetry envelope",
+    "func": "if (msg.statusCode !== 200 || msg.payload.schema_version !== 1) { node.warn('Telemetry unavailable'); return null; }\nmsg.payload = JSON.stringify(msg.payload);\nreturn msg;",
+    "outputs": 1,
+    "x": 740,
+    "y": 80,
+    "wires": [
+      [
+        "publish"
+      ]
+    ]
+  },
+  {
+    "id": "publish",
+    "type": "mqtt out",
+    "z": "phase2",
+    "name": "Live telemetry (QoS 1, retained)",
+    "topic": "scada/v1/telemetry",
+    "qos": "1",
+    "retain": "true",
+    "broker": "broker",
+    "x": 1030,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "commands",
+    "type": "mqtt in",
+    "z": "phase2",
+    "name": "Operator commands",
+    "topic": "scada/v1/commands",
+    "qos": "1",
+    "datatype": "json",
+    "broker": "broker",
+    "x": 140,
+    "y": 220,
+    "wires": [
+      [
+        "command-check"
+      ]
+    ]
+  },
+  {
+    "id": "command-check",
+    "type": "function",
+    "z": "phase2",
+    "name": "Reject retained commands",
+    "func": "if (msg.retain) { node.warn('Retained command rejected'); return null; }\nif (!msg.payload || typeof msg.payload.request_id !== 'string') { node.warn('request_id required'); return null; }\nmsg.headers = {'content-type':'application/json'};\nreturn msg;",
+    "outputs": 1,
+    "x": 400,
+    "y": 220,
+    "wires": [
+      [
+        "command-http"
+      ]
+    ]
+  },
+  {
+    "id": "command-http",
+    "type": "http request",
+    "z": "phase2",
+    "name": "Validate and execute command",
+    "method": "POST",
+    "ret": "obj",
+    "url": "http://simulator:8080/commands",
+    "x": 700,
+    "y": 220,
+    "wires": [
+      [
+        "ack-json"
+      ]
+    ]
+  },
+  {
+    "id": "ack-json",
+    "type": "function",
+    "z": "phase2",
+    "name": "Serialize acknowledgement",
+    "func": "msg.payload = JSON.stringify(msg.payload); return msg;",
+    "outputs": 1,
+    "x": 980,
+    "y": 220,
+    "wires": [
+      [
+        "ack"
+      ]
+    ]
+  },
+  {
+    "id": "ack",
+    "type": "mqtt out",
+    "z": "phase2",
+    "name": "Command acknowledgement",
+    "topic": "scada/v1/acks",
+    "qos": "1",
+    "retain": "false",
+    "broker": "broker",
+    "x": 990,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "errors",
+    "type": "catch",
+    "z": "phase2",
+    "name": "Integration errors",
+    "scope": null,
+    "uncaught": false,
+    "x": 180,
+    "y": 380,
+    "wires": [
+      [
+        "debug"
+      ]
+    ]
+  },
+  {
+    "id": "debug",
+    "type": "debug",
+    "z": "phase2",
+    "name": "Connection / validation errors",
+    "active": true,
+    "tosidebar": true,
+    "console": true,
+    "complete": "true",
+    "x": 470,
+    "y": 380,
+    "wires": []
+  }
+]

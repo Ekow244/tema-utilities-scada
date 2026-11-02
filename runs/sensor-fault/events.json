@@ -1,0 +1,38 @@
+[
+  {
+    "time": 0.0,
+    "previous": "IDLE",
+    "state": "PRECHECK",
+    "reason": ""
+  },
+  {
+    "time": 0.5,
+    "previous": "PRECHECK",
+    "state": "FILL",
+    "reason": ""
+  },
+  {
+    "time": 30.5,
+    "previous": "FILL",
+    "state": "HEAT",
+    "reason": ""
+  },
+  {
+    "time": 394.5,
+    "previous": "HEAT",
+    "state": "HOLD",
+    "reason": ""
+  },
+  {
+    "time": 394.5,
+    "previous": "HOLD",
+    "state": "HOLD",
+    "reason": "Injected sensor-fault"
+  },
+  {
+    "time": 395.0,
+    "previous": "HOLD",
+    "state": "FAULTED",
+    "reason": "Sensor invalid or process safety limit exceeded"
+  }
+]

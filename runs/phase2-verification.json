@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "normal_batch": "f85b7bf2-e1b7-4b06-abd0-a5e23e132a61",
+  "fault_batch": "b526cc5c-58ca-4117-b5dc-67f7c6f796a1",
+  "normal_samples": 171,
+  "distinct_normal_commands": 3,
+  "normal_states": [
+    "PRECHECK",
+    "FILL",
+    "PAUSED",
+    "FILL",
+    "HEAT",
+    "HOLD",
+    "DISCHARGE",
+    "CIP_FILL",
+    "CIP_RINSE",
+    "CIP_DRAIN",
+    "COMPLETE"
+  ],
+  "checks": [
+    "MQTT command routing",
+    "duplicate command suppression",
+    "pause/resume",
+    "complete batch historian",
+    "sensor fault quality",
+    "safe heater output",
+    "history survives simulator restart"
+  ]
+}

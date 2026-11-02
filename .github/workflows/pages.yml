@@ -1,0 +1,58 @@
+name: Verify and deploy portfolio demo
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16.6-alpine
+        env:
+          POSTGRES_USER: scada
+          POSTGRES_PASSWORD: ci-test-only
+          POSTGRES_DB: scada
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U scada -d scada"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://scada:ci-test-only@localhost:5432/scada
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: pip install -r requirements.txt
+      - name: Initialize test schema
+        run: python -c "import os,psycopg; from pathlib import Path; c=psycopg.connect(os.environ['DATABASE_URL'],autocommit=True); c.execute(Path('deploy/schema.sql').read_text()); c.close()"
+      - run: python -m unittest discover -s tests -v
+      - run: node --test tests/demo-engine.test.cjs
+      - run: python scripts/build_pages.py
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: pages
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

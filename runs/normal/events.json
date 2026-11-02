@@ -1,0 +1,56 @@
+[
+  {
+    "time": 0.0,
+    "previous": "IDLE",
+    "state": "PRECHECK",
+    "reason": ""
+  },
+  {
+    "time": 0.5,
+    "previous": "PRECHECK",
+    "state": "FILL",
+    "reason": ""
+  },
+  {
+    "time": 30.5,
+    "previous": "FILL",
+    "state": "HEAT",
+    "reason": ""
+  },
+  {
+    "time": 394.5,
+    "previous": "HEAT",
+    "state": "HOLD",
+    "reason": ""
+  },
+  {
+    "time": 910.0,
+    "previous": "HOLD",
+    "state": "DISCHARGE",
+    "reason": ""
+  },
+  {
+    "time": 940.0,
+    "previous": "DISCHARGE",
+    "state": "CIP_FILL",
+    "reason": ""
+  },
+  {
+    "time": 950.0,
+    "previous": "CIP_FILL",
+    "state": "CIP_RINSE",
+    "reason": ""
+  },
+  {
+    "time": 980.0,
+    "previous": "CIP_RINSE",
+    "state": "CIP_DRAIN",
+    "reason": ""
+  },
+  {
+    "time": 990.0,
+    "previous": "CIP_DRAIN",
+    "state": "COMPLETE",
+    "reason": ""
+  }
+]

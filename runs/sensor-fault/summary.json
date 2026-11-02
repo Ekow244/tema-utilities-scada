@@ -1,0 +1,15 @@
+{
+  "scenario": "sensor-fault",
+  "final_state": "FAULTED",
+  "seconds": 395.0,
+  "max_temperature": 59.555,
+  "reason": "Sensor invalid or process safety limit exceeded",
+  "recipe": {
+    "name": "Demo water batch",
+    "volume": 60.0,
+    "setpoint": 60.0,
+    "hold_seconds": 120.0,
+    "rinse_volume": 20.0,
+    "rinse_seconds": 30.0
+  }
+}

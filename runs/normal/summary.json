@@ -1,0 +1,15 @@
+{
+  "scenario": "normal",
+  "final_state": "COMPLETE",
+  "seconds": 990.0,
+  "max_temperature": 62.194,
+  "reason": "",
+  "recipe": {
+    "name": "Demo water batch",
+    "volume": 60.0,
+    "setpoint": 60.0,
+    "hold_seconds": 120.0,
+    "rinse_volume": 20.0,
+    "rinse_seconds": 30.0
+  }
+}

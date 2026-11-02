@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+pages/
+.DS_Store
+.env
+runs/**/samples.csv
+pages-preview.png

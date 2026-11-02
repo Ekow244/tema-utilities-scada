@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#102d52"><title>ECG-inspired Utilities Lab · SCADA Demo</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="Utilities lab home"><span class="brand-symbol">ϟ</span><span>ECG<span class="brand-sub">INDUSTRIAL LAB</span></span></a>
+  <div class="facility-label">CONCEPT FACILITY</div><div class="facility-name">Tema Utilities Lab<span>Greater Accra · Ghana</span></div>
+  <nav aria-label="Main navigation">
+    <button class="nav active" data-view="overview"><span>▦</span>Process overview</button>
+    <button class="nav" data-view="recipes"><span>≡</span>Recipe library</button>
+    <button class="nav" data-view="alarms"><span>♧</span>Alarm console <b id="nav-alarm-count">0</b></button>
+    <button class="nav" data-view="history"><span>◷</span>Batch historian</button>
+  </nav>
+  <div class="side-bottom"><span class="ghana"><i></i><i>★</i><i></i></span><p>Built for industrial learning.<br>Powered by curiosity.</p><div class="side-version">SCADA / MVP 03 <span>SIMULATION</span></div></div>
+</aside>
+<div class="workspace">
+<div class="concept-bar">Independent portfolio simulation <span>·</span> ECG-inspired concept · No connection to ECG systems</div>
+<header><div class="breadcrumb">TEMA UTILITIES LAB <span>/</span> THERMAL PROCESS SKID</div><div class="header-right"><span id="connection" class="status disconnected">Connecting</span><time id="clock">— GMT</time><span class="avatar">OP</span></div></header>
+<main>
+<div class="page-title"><div><div class="eyebrow">OPERATIONS / UNIT 01</div><h1 id="page-heading">Process overview</h1><p id="page-subtitle">A live view of your thermal batch process.</p></div><div class="session"><span class="live-dot"></span> LIVE SIMULATION <b id="speed">20×</b></div></div>
+<div id="stale-banner" class="error-banner" hidden>Process data is unavailable. Controls are disabled until the connection recovers.</div>
+<section id="view-overview" class="view">
+  <div class="metrics">
+    <article class="metric"><div class="metric-top">VESSEL TEMPERATURE <span>TT-101</span></div><div class="metric-value"><strong id="temperature">—</strong><span>°C</span></div><div class="metric-bottom"><span id="temperature-note">Awaiting process data</span><span class="mini-line">⌁</span></div></article>
+    <article class="metric"><div class="metric-top">VESSEL LEVEL <span>LT-101</span></div><div class="metric-value"><strong id="volume">—</strong><span>L</span></div><div class="level-track"><i id="level-bar"></i></div><div class="metric-bottom">120 L vessel capacity</div></article>
+    <article class="metric"><div class="metric-top">HEATER DEMAND <span>EH-101</span></div><div class="metric-value"><strong id="heater">—</strong><span>%</span></div><div class="metric-bottom"><span id="power">— kW thermal input</span><span class="yellow-dot"></span></div></article>
+    <article class="metric state-metric"><div class="metric-top">BATCH STATUS <span>SEQ-01</span></div><div class="metric-value"><strong id="state">—</strong></div><div class="metric-bottom"><span id="elapsed">0:00 simulated</span><span id="batch-short">—</span></div></article>
+  </div>
+  <div class="process-grid">
+    <section class="panel process-panel"><div class="panel-title"><h2>Process schematic</h2><span class="tag">THERMAL UTILITIES TRAINING SKID</span></div>
+      <div class="supply-strip"><span class="supply-icon">ϟ</span><b>Simulated electrical supply</b><span>415 V · 50 Hz · nominal reference</span><span class="supply-state"><i></i>AVAILABLE</span></div>
+      <svg id="plant" viewBox="0 0 800 385" role="img" aria-label="Live process schematic showing a supply tank, heated batch vessel, inlet valve, discharge pump and fresh-water rinse">
+      <defs><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#e7edf3" stroke-width="0.6"/></pattern><linearGradient id="steel" x1="0" x2="1"><stop stop-color="#e3eaf0"/><stop offset=".4" stop-color="#fbfdff"/><stop offset="1" stop-color="#dbe4ed"/></linearGradient><linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#7cc5eb"/><stop offset="1" stop-color="#348bbd"/></linearGradient><clipPath id="batch-clip"><rect x="415" y="109" width="166" height="161" rx="20"/></clipPath><clipPath id="supply-clip"><rect x="85" y="125" width="118" height="145" rx="12"/></clipPath></defs>
+      <rect width="800" height="385" fill="url(#grid)"/>
+      <path d="M145 273V303H333V202H415 M498 271V303H729V242 M581 150H644V75H498V110" class="pipe"/>
+      <path id="fill-flow" d="M145 273V303H333V202H415" class="flow"/><path id="drain-flow" d="M498 271V303H729V242" class="flow"/><path id="rinse-flow" d="M644 75H498V110" class="flow"/>
+      <path d="M107 273V287M181 273V287M439 273V289M557 273V289" stroke="#7c8b9e" stroke-width="6"/>
+      <rect x="81" y="121" width="126" height="153" rx="18" fill="url(#steel)" stroke="#8da1b5" stroke-width="2"/>
+      <g clip-path="url(#supply-clip)"><rect id="supply-water" x="85" y="145" width="118" height="125" fill="url(#water)" opacity=".85"/></g>
+      <ellipse cx="144" cy="125" rx="61" ry="13" fill="#e7edf3" stroke="#8da1b5"/>
+      <text x="144" y="191" class="equipment-label">TK-001</text><text x="144" y="213" class="tank-value" id="supply-level">200 L</text>
+      <text x="144" y="98" class="diagram-heading">SUPPLY TANK</text><text x="144" y="334" class="diagram-note">Fresh process water</text>
+      <g id="inlet-symbol"><path d="M267 291L285 303L267 315ZM303 291L285 303L303 315Z" fill="#c4ced9" stroke="#6c8199" stroke-width="1.5"/><path d="M285 290V278H296" fill="none" stroke="#6c8199" stroke-width="2"/></g><text x="285" y="350" class="diagram-note">XV-101 / INLET</text>
+      <rect x="411" y="105" width="174" height="169" rx="25" fill="url(#steel)" stroke="#8da1b5" stroke-width="2"/>
+      <g clip-path="url(#batch-clip)"><rect id="batch-water" x="415" y="270" width="166" height="0" fill="url(#water)" opacity=".9"/></g>
+      <ellipse cx="498" cy="109" rx="85" ry="16" fill="#e7edf3" stroke="#8da1b5"/>
+      <path id="heater-coil" d="M439 249h15v-10h15v10h15v-10h15v10h15v-10h15v10h22" fill="none" stroke="#d3a84a" stroke-width="4" stroke-linejoin="round"/>
+      <text x="498" y="169" class="equipment-label">TK-101</text><text x="498" y="196" class="tank-value" id="tank-temperature">20.0 °C</text><text x="498" y="217" class="diagram-note" id="tank-volume">0.0 / 120 L</text>
+      <text x="498" y="49" class="diagram-heading">HEATED BATCH VESSEL</text><text x="647" y="57" class="diagram-note">CIP WATER</text>
+      <g id="pump-symbol"><circle cx="651" cy="303" r="20" fill="#eff3f7" stroke="#6c8199" stroke-width="2"/><path d="M644 291L664 303L644 315Z" fill="#8a9cb1"/></g><text x="651" y="350" class="diagram-note">P-101 / DISCHARGE</text>
+      <path d="M719 242H739M723 235H735M727 228H731" stroke="#6c8199" stroke-width="2"/><text x="733" y="211" class="diagram-note">OUTLET</text>
+      <path d="M600 188H620" stroke="#8da1b5" stroke-dasharray="3 3"/><circle cx="637" cy="188" r="18" fill="white" stroke="#8da1b5"/><text x="637" y="191" class="instrument">TT</text>
+      </svg>
+      <div class="diagram-footer"><span><i class="legend-dot blue"></i>Process water</span><span><i class="legend-dot gold"></i>Electric heater</span><span><i class="legend-dot green"></i>Active flow</span><span class="diagram-caption">P&amp;ID-inspired · all data simulated</span></div>
+    </section>
+    <section class="panel operations"><div class="panel-title"><h2>Batch control</h2><span class="tag">AUTO</span></div><div class="prepared-recipe">PREPARED RECIPE<strong id="prepared-recipe">Loading…</strong></div><label for="recipe-select" class="field-label">RECIPE FOR NEW BATCH</label><select id="recipe-select"><option>Loading recipes…</option></select><button id="prepare" class="button secondary full">Prepare new batch</button><p class="hint" id="recipe-description">Select a recipe to prepare the skid.</p><div class="controls"><button id="start" class="button primary">▶ Start batch</button><button id="pause" class="button secondary">Ⅱ Pause</button><button id="abort" class="button danger full">Abort batch</button></div><div class="sequence-heading">SEQUENCE PROGRESS <span id="hold-status">—</span></div><ol id="sequence"></ol><details class="fault-tools"><summary>Demonstrate a fault</summary><button data-fault="sensor-fault">Temperature sensor failure</button><button data-fault="pump-fault">Discharge pump failure</button><button data-fault="heat-loss">Increase thermal loss</button><p>Faults change the live simulation.</p></details></section>
+  </div>
+  <div class="lower-grid"><section class="panel trend-panel"><div class="panel-title"><h2>Live process trend</h2><select id="trend-kind" aria-label="Trend measurement"><option value="temperature">Temperature · °C</option><option value="volume">Vessel level · L</option><option value="heater">Heater output · %</option></select></div><div class="trend-legend"><span><i class="legend-dot blue"></i><span id="trend-name">Temperature</span></span><span id="sp-legend"><i class="legend-dot gold"></i>Setpoint</span><span class="trend-window">Latest 20 simulated minutes</span></div><svg id="trend" viewBox="0 0 800 200" role="img" aria-label="Live process trend"></svg></section><section class="panel alarm-summary"><div class="panel-title"><h2>Alarm summary</h2><button class="text-button" data-goto="alarms">View console ↗</button></div><div id="alarm-summary"></div></section></div>
+</section>
+<section id="view-recipes" class="view" hidden><div class="recipe-layout"><section class="panel"><div class="panel-title"><h2>Versioned recipe library</h2><span class="tag">SQL STORED</span></div><div id="recipe-list"></div></section><section class="panel recipe-editor"><div class="panel-title"><h2>Create recipe version</h2></div><p class="hint">Saved versions remain unchanged. Each batch keeps its own recipe snapshot.</p><form id="recipe-form"><label>Recipe name<input name="name" value="Tema · custom training" maxlength="80" required></label><div class="form-grid"><label>Fill volume · L<input name="volume" type="number" min="10" max="100" step="1" value="60" required></label><label>Setpoint · °C<input name="setpoint" type="number" min="25" max="75" step="0.5" value="60" required></label><label>Hold time · s<input name="hold_seconds" type="number" min="1" max="1200" value="120" required></label><label>Rinse volume · L<input name="rinse_volume" type="number" min="1" max="100" value="20" required></label><label>Rinse dwell · s<input name="rinse_seconds" type="number" min="1" max="300" value="30" required></label></div><button class="button primary" type="submit">Save new version</button></form></section></div></section>
+<section id="view-alarms" class="view" hidden><div class="alarm-info"><strong>Priorities with purpose.</strong> P1: immediate process response · P2: prompt operator investigation. P2 alarms can be shelved for 60 real seconds. Shelving does not bypass interlocks.</div><section class="panel"><div class="panel-title"><h2>Current batch alarms</h2><span class="tag">ISA-18.2-INSPIRED</span></div><div id="alarm-console"></div></section><section class="panel audit-panel"><div class="panel-title"><h2>Alarm activity</h2></div><div id="alarm-audit"></div></section></section>
+<section id="view-history" class="view" hidden><section class="panel"><div class="panel-title"><h2>Batch records</h2><button id="refresh-history" class="button secondary">Refresh records</button></div><div id="history-list" class="table-scroll"></div></section><section id="history-detail" class="panel audit-panel" hidden></section></section>
+<footer><span><i class="live-dot"></i> PYTHON CONTROLS · MODBUS TCP · MQTT · SQL HISTORIAN</span><span>Fictional training facility · Tema, Ghana</span></footer>
+</main></div><div id="toast" role="status" aria-live="polite" hidden></div>
+</body></html>

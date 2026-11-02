@@ -1,0 +1,62 @@
+[
+  {
+    "time": 0.0,
+    "previous": "IDLE",
+    "state": "PRECHECK",
+    "reason": ""
+  },
+  {
+    "time": 0.5,
+    "previous": "PRECHECK",
+    "state": "FILL",
+    "reason": ""
+  },
+  {
+    "time": 30.5,
+    "previous": "FILL",
+    "state": "HEAT",
+    "reason": ""
+  },
+  {
+    "time": 394.5,
+    "previous": "HEAT",
+    "state": "HOLD",
+    "reason": ""
+  },
+  {
+    "time": 394.5,
+    "previous": "HOLD",
+    "state": "HOLD",
+    "reason": "Injected heat-loss"
+  },
+  {
+    "time": 693.0,
+    "previous": "HOLD",
+    "state": "DISCHARGE",
+    "reason": ""
+  },
+  {
+    "time": 723.0,
+    "previous": "DISCHARGE",
+    "state": "CIP_FILL",
+    "reason": ""
+  },
+  {
+    "time": 733.0,
+    "previous": "CIP_FILL",
+    "state": "CIP_RINSE",
+    "reason": ""
+  },
+  {
+    "time": 763.0,
+    "previous": "CIP_RINSE",
+    "state": "CIP_DRAIN",
+    "reason": ""
+  },
+  {
+    "time": 773.0,
+    "previous": "CIP_DRAIN",
+    "state": "COMPLETE",
+    "reason": ""
+  }
+]
